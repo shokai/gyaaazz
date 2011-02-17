@@ -1,4 +1,3 @@
-require 'digest/md5'
 
 class Page
   include Mongoid::Document

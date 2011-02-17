@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
+before do
+  @title = 'gyaaazz'
+end
 
 get '/' do
-  @title = 'gyaaazz'
   haml :index
 end
 
@@ -47,6 +49,6 @@ get '/*/' do
 end
 
 get '/*' do
-  name = params[:splat].first
-  puts name
+  @name = params[:splat].first
+  haml :edit
 end
