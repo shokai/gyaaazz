@@ -1,0 +1,8 @@
+gem 'rack'
+gem 'sinatra'
+gem 'thin'
+gem 'sinatra-reloader'
+gem 'mongo'
+gem 'bson'
+gem 'bson_ext'
+gem 'mongoid', '2.0.0.rc.7'
