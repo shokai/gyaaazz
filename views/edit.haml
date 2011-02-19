@@ -9,9 +9,18 @@
     %script{:type => 'text/javascript', :src => "#{app_root}/js/edit.js"}
     :javascript
       var app_root = "#{app_root}"
-    %link{:rel => 'stylesheet', :href => "#{app_root}/css/fonts-3.1.1.css"}
-    %link{:rel => 'stylesheet', :href => "#{app_root}/css/reset-3.1.1.css"}
-    %link{:rel => 'stylesheet', :href => "#{app_root}/css/edit.css"}
+    %link{:rel => 'stylesheet', :href => "#{app_root}/css/fonts-3.1.1.css", :type => 'text/css'}
+    %link{:rel => 'stylesheet', :href => "#{app_root}/css/reset-3.1.1.css", :type => 'text/css'}
+    %link{:rel => 'stylesheet', :href => "#{app_root}/css/edit.css", :type => 'text/css'}
   %body
-    %h1 #{@title}/#{@name}
-    %div#edit
+    %div.container
+      %div.head
+        %h1 #{@title}/#{@name}
+      %div.main
+        %div#edit
+      %div.push
+      %div#status
+    %div.footer
+      %a{:href => 'http://github.com/shokai/gyaaazz'}
+        github.com/shokai/gyaaazz
+
