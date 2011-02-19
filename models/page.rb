@@ -3,13 +3,15 @@ class Page
   include Mongoid::Document
   field :name
   field :time, :type => Integer
-  field :body
+  field :lines, :type => Array
 
   def to_hash
-    {
+    h = {
       :name => name,
       :time => time,
-      :body => body
+      :lines => lines
     }
+    h[:lines] = ["(empty)"] unless lines
+    return h
   end
 end
