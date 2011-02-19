@@ -6,7 +6,13 @@ before do
 end
 
 get '/' do
+  @pages = Page.all.desc(:time).map{|i| i.name}.uniq
   haml :index
+end
+
+get '/*/' do
+  name = params[:splat].first
+  @mes = name
 end
 
 get '/*.json' do
