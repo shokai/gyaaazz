@@ -12,7 +12,8 @@ end
 
 get '/*/' do
   name = params[:splat].first
-  @mes = name
+  @pages = Page.where(:name => /#{name}\//).map{|i| i.name}.uniq
+  haml :index
 end
 
 get '/*.json' do
