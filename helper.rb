@@ -8,6 +8,7 @@ gem 'mongoid','2.0.0.rc.7'
 require 'yaml'
 require 'json'
 require File.dirname(__FILE__)+'/models/page'
+require File.dirname(__FILE__)+'/models/pagelog'
 
 begin
   @@conf = YAML::load open(File.dirname(__FILE__)+'/config.yaml').read

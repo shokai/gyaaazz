@@ -39,13 +39,17 @@ post '/*.json' do
   name = params[:splat].first
   lines = params[:lines].delete_if{|i| i.size < 1 or i =~ /^\s+$/}
   now = Time.now
-  last_page = Page.where(:name => name).desc(:time).first
-  if last_page and last_page.lines == lines
+  page = Page.where(:name => name).desc(:time).first
+  if page and page.lines == lines
     @mes = {:success => true, :message => 'save'}.to_json
   else
     begin
-      page = Page.new(:name => name, :lines => lines, :time => now)
+      page = Page.new unless page
+      page.name = name
+      page.lines = lines
+      page.time = now
       page.save
+      PageLog.new(:name => name, :lines => lines, :time => now).save
       @mes = {:success => true, :message => 'saved!'}.to_json
     rescue => e
       STDERR.puts e
