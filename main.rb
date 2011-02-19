@@ -14,6 +14,12 @@ get '/*.json' do
   begin
     status 200
     page = Page.where(:name => name).first
+    unless page
+      page = Page.new
+      page.time = Time.now
+      page.name = name
+      page.save
+    end
     @mes = page.to_hash.to_json
   rescue
     status 404

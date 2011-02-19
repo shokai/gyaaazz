@@ -11,7 +11,7 @@ class Page
       :time => time,
       :lines => lines
     }
-    h[:lines] = ["(empty)"] unless lines
+    h[:lines] = ["(empty)"] if !lines or lines.length < 1
     return h
   end
 end
