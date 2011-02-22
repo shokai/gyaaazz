@@ -5,15 +5,24 @@ before do
   @title = 'gyaaazz'
 end
 
+def filter_api
+  if env['PATH_INFO'] =~ /^\/api[\/$]/
+    redirect "#{app_root}#{env['PATH_INFO'].gsub(/api/,'API')}"
+  end
+end
+
 get '/api/search.json' do
   word = params['word']
-  puts word
-  @pages = Page.where(:lines => /#{word}/).desc(:time)
-  @mes = @pages.map{|i|
-    {:name => i.name,
+  if !word or word.size < 1
+    @mes = {:error => true, :message => 'word required'}.to_json
+  else
+    @pages = Page.where(:lines => /#{word}/).desc(:time)
+    @mes = @pages.map{|i|
+      {:name => i.name,
      :lines => i.lines.size,
-     :time => i.time}
-  }.to_json
+        :time => i.time}
+    }.to_json
+  end
 end
 
 get '/' do
@@ -22,12 +31,14 @@ get '/' do
 end
 
 get '/*/' do
+  filter_api
   name = params[:splat].first
   @pages = Page.where(:name => /#{name}\//).map{|i| i.name}.uniq
   haml :index
 end
 
 get '/*.json' do
+  filter_api
   name = params[:splat].first
   begin
     status 200
@@ -47,6 +58,7 @@ get '/*.json' do
 end
 
 post '/*.json' do
+  filter_api
   name = params[:splat].first
   lines = params[:lines].delete_if{|i| i.size < 1 or i =~ /^\s+$/}
   now = Time.now
@@ -74,6 +86,7 @@ get '/*/' do
 end
 
 get '/*' do
+  filter_api
   @name = params[:splat].first
   haml :edit
 end
