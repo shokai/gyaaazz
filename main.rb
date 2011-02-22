@@ -9,7 +9,11 @@ get '/api/search.json' do
   word = params['word']
   puts word
   @pages = Page.where(:lines => /#{word}/).desc(:time)
-  @mes = @pages.map{|i|i.name}.to_json
+  @mes = @pages.map{|i|
+    {:name => i.name,
+     :lines => i.lines.size,
+     :time => i.time}
+  }.to_json
 end
 
 get '/' do
