@@ -134,6 +134,11 @@ div#related_pages a{
     color : #000;
 }
 
+div#related_pages img{
+    width : 80px;
+    height : 80px;
+}
+
 div#float_clear{
     clear : both;
 }

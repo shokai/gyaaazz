@@ -18,9 +18,18 @@ get '/api/search.json' do
   else
     @pages = Page.where(:lines => /#{word}/).desc(:time)
     @mes = @pages.map{|i|
-      {:name => i.name,
-     :lines => i.lines.size,
-        :time => i.time}
+      h = {
+        :name => i.name,
+        :lines => i.lines.size,
+        :time => i.time
+      }
+      for line in i.lines do
+        if line =~ /\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/
+          h[:img] = line.scan(/\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/).first.join('')
+          break
+        end
+      end
+      h
     }.to_json
   end
 end

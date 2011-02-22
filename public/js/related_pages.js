@@ -5,7 +5,13 @@ $(function(){
         else{
             res.forEach(function(i){
                 var box = $('<span>');
-                var a = $('<a>').append(i.name).attr('href',app_root+'/'+i.name);
+                var a = $('<a>').attr('href',app_root+'/'+i.name);
+                if(i.img){
+                    a.append($('<img>').attr('src',i.img));
+                }
+                else{
+                    a.append(i.name);
+                }
                 box.append(a);
                 box.click(function(){
                     location.href = app_root+'/'+i.name;
