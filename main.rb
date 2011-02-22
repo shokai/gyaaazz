@@ -44,7 +44,7 @@ get '/api/related_pages.json' do
       Page.where(:lines => /\[\[#{name}\]\]/).each{|page|
         @pages << page
         Page.where(:lines => /\[\[#{page.name}\]\]/).each{|i|
-          @page << i
+          @pages << i
         }
       }
       @pages = @pages.uniq.delete_if{|i|
