@@ -5,6 +5,13 @@ before do
   @title = 'gyaaazz'
 end
 
+get '/api/search.json' do
+  word = params['word']
+  puts word
+  @pages = Page.where(:lines => /#{word}/).desc(:time)
+  @mes = @pages.map{|i|i.name}.to_json
+end
+
 get '/' do
   @pages = Page.all.desc(:time).map{|i| i.name}.uniq
   haml :index
