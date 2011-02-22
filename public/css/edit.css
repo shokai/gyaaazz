@@ -93,14 +93,6 @@ ul li {
     padding-left : 8px;
     border-bottom : 2px dashed #eee;
 }
-/*
- * Color animation does not work,
- * thus I apply color in edit.js ...
- *
-  li.current_block {
-      background-color: #fef4f4;
-  }
-*/
 
 div#status{
     display: none;
@@ -121,4 +113,27 @@ div#status{
 }
 
 div#edit{
+}
+
+div#related_pages{
+    padding-left : 20px;
+    margin-bottom : 110px;
+}
+
+div#related_pages span{
+    width : 80px;
+    height : 80px;
+    font-size : 16pt;
+    float : left;
+    text-align : center;
+    background-color : #CCC;
+    margin : 3px;
+}
+
+div#related_pages a{
+    color : #000;
+}
+
+div#float_clear{
+    clear : both;
 }
