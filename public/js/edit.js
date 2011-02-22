@@ -19,12 +19,13 @@ $(function(){
     });
 });
 
-document.onkeydown = function(e){
+document.addEventListener('keydown', function(e){
     last_edit_at = new Date();
-};
-document.onmousemove = function(e){
+});
+
+document.addEventListener('mousemove', function(e){
     last_edit_at = new Date();
-};
+});
 
 setInterval(function(){
 	if(new Date()-last_edit_at > 15000){ // 15秒間操作していない
@@ -77,10 +78,10 @@ function load_page(on_load){
 };
 
 function message(str){
-    $('#status').html(str);
-    $('#status').fadeIn('slow', function(){
-        $(this).fadeOut(1000);
-    });
+    $('#status').html(str).
+        fadeIn('slow', function(){
+            $(this).fadeOut(1000);
+        });
 };
 
 function save_page(){
@@ -110,10 +111,14 @@ function markup(line){
 
 function display(){
     $('#edit').html('');
+    var ul = $('<ul>');
     for(var i = 0; i < data.lines.length; i++){
 	    var line = markup(data.lines[i]);
-    	$('#edit').append('<li class="line" id="li' + i + '"><span class="line" id="text' +i+ '">' + line.match(/^ *(.*)/)[1] + '</span></li>');
-	    $('li#li'+i).css('padding-left', data.lines[i].indent()*30);
+        var li = $('<li>').addClass('line').attr('id', 'li'+i).css('padding-left', data.lines[i].indent()*30);
+        var span = $('<span>').addClass('line').attr('id','text'+i);
+        span.html(line.match(/^ *(.*)/)[1]);
+        li.html(span);
+        ul.append(li);
     	$('span#text'+i).die('dblclick');
     	new function(i){
     	    $('span#text'+i).live('dblclick', function(e){
@@ -123,7 +128,7 @@ function display(){
     		});
     	}(i);
     }
-    $('#edit').html('<ul>'+$('#edit').html()+'</ul>');
+    $('#edit').html(ul);
 };
 
 function save_currentline(){
@@ -147,8 +152,7 @@ function highlight_current_block(color){
     current_block = get_block_indexes(currentline);
     if(current_block.length < 2) return;
     $.each(current_block, function(){ 
-        var line_elm = $('li#li'+this);
-        line_elm.css({'background-color' : color });
+        var line_elm = $('li#li'+this).css({'background-color' : color });
         setTimeout(function(){
             line_elm.animate({'background-color' :'rgb(255, 255, 255)'},
                              1000);
@@ -161,7 +165,7 @@ function editline(num){
     sync_stop();
     currentline = num;
     line = $('li#li'+num);
-    line.html('<input type="text" id="line'+num+'" size="140">');
+    line.html($('<input>').attr('type','text').attr('id','line'+num).attr('size',140));
     $('#line'+num).val(data.lines[num]);
     $('input#line'+num).focus();
     line.die('click');
