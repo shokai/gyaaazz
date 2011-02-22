@@ -34,6 +34,45 @@ get '/api/search.json' do
   end
 end
 
+get '/api/related_pages.json' do
+  name = params['page']
+  if !name or name.size < 1
+    @mes = {:error => true, :message => 'page required'}.to_json
+  else
+    @pages = Array.new
+    begin
+      Page.where(:lines => /\[\[#{name}\]\]/).each{|page|
+        @pages << page
+        Page.where(:lines => /\[\[#{page.name}\]\]/).each{|i|
+          @page << i
+        }
+      }
+      @pages = @pages.uniq.delete_if{|i|
+        i.name == name
+      }.sort{|a,b|
+        b.time <=> a.time
+      }.map{|i|
+        h = {
+          :name => i.name,
+          :lines => i.lines.size,
+          :time => i.time
+        }
+        for line in i.lines do
+          if line =~ /\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/
+            h[:img] = line.scan(/\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/).first.join('')
+            break
+          end
+        end
+        h
+      }
+      @mes = @pages.to_json
+    rescue => e
+      STDERR.puts e
+      @mes = {:error => true, :message => 'error'}.to_json
+    end
+  end
+end
+
 get '/' do
   @pages = Page.all.desc(:time).map{|i| i.name}.uniq
   haml :index

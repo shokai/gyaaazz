@@ -1,5 +1,5 @@
 $(function(){
-    $.getJSON(app_root+'/api/search.json?word='+page_name, function(res){
+    $.getJSON(app_root+'/api/related_pages.json?page='+page_name, function(res){
         if(res.error){
         }
         else{
