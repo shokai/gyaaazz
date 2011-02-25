@@ -5,11 +5,16 @@ before do
   @title = 'gyaaazz'
 end
 
-def filter_api
-  if env['PATH_INFO'] =~ /^\/api[\/$]/
-    redirect "#{app_root}#{env['PATH_INFO'].gsub(/api/,'API')}"
+post '/api/copy.json' do
+  from = params['from']
+  to = params['to']
+  if from.to_s.size < 1 or to.to_s.size < 1
+    @mes = {:error => true, :message => 'from and to required'}.to_json
+  else
+    
   end
 end
+
 
 get '/api/search.json' do
   word = params['word']
@@ -136,5 +141,5 @@ end
 get '/*' do
   filter_api
   @name = params[:splat].first
-  haml :edit
+  haml :page
 end
