@@ -18,11 +18,9 @@ rescue => e
   STDERR.puts e
 end
 
-before do
-  Mongoid.configure{|conf|
-    conf.master = Mongo::Connection.new(@@conf['mongo_server'], @@conf['mongo_port']).db(@@conf['mongo_dbname'])
-  }
-end
+Mongoid.configure{|conf|
+  conf.master = Mongo::Connection.new(@@conf['mongo_server'], @@conf['mongo_port']).db(@@conf['mongo_dbname'])
+}
 
 def app_root
   "#{env['rack.url_scheme']}://#{env['HTTP_HOST']}#{env['SCRIPT_NAME']}"
