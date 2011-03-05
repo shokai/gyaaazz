@@ -56,7 +56,7 @@ for i in 0...pages.size do
     puts lines = get_page(name, page)
     next if lines.size < 1
     Page.new(
-             :name => page,
+             :name => page.gsub(/\+/,' '),
              :time => Time.now.to_i,
              :lines => lines
              ).save
