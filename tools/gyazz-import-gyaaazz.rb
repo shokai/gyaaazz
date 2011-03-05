@@ -47,9 +47,12 @@ def get_page(name, page_name)
 end
 
 errors = Array.new
-get_pagelist(name).each{|page|
+pages = get_pagelist(name)
+
+for i in 0...pages.size do
+  page = pages[i]
   begin
-    puts "===#{page}==="
+    puts "===#{page} (#{i}/#{pages.size})==="
     puts lines = get_page(name, page)
     next if lines.size < 1
     Page.new(
@@ -62,7 +65,7 @@ get_pagelist(name).each{|page|
     errors << page
   end
   sleep 5
-}
+end
 
 if errors.size > 0
   puts 'error pages:'
