@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
-
 before do
   @title = 'gyaaazz'
 end
@@ -11,7 +10,20 @@ post '/api/copy.json' do
   if from.to_s.size < 1 or to.to_s.size < 1
     @mes = {:error => true, :message => 'from and to required'}.to_json
   else
-    
+    begin
+      page_from = Page.where(:name => from).first
+      unless Page.where(:name => to).count > 0
+        page_to = Page.new(page_from.to_hash)
+        page_to.name = to
+        page_to.save
+        @mes = {:message => to}.to_json
+      else
+        @mes = {:error => true, :message => 'page already exists'}.to_json
+      end
+    rescue => e
+      STDERR.puts e
+      @mes = {:error => true, :message => 'copy error'}.to_json
+    end
   end
 end
 
