@@ -103,6 +103,7 @@ function markup(line){
     line = line.htmlEscape();
     line = line.replace_all(/\[\[\[(.+)\]\]\]/, '<b>$1</b>', ']]]');
     line = line.replace_all(/\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/, '<img src="$1$2">', ']]');
+    line = line.replace_all(/\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+) (https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/, '<a href="$1"><img src="$2$3"></a>', ']]');
     line = line.replace_all(/\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+) (.+)\]\]/, '<a href="$1">$2</a>', ']]');
     line = line.replace_all(/\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)\]\]/, '<a href="$1">$1</a>', ']]');
     line = line.replace_all(/\[\[(.+)\]\]/, '<a href="'+app_root+'/$1">$1</a>', ']]');
