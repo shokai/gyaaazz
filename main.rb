@@ -12,7 +12,7 @@ post '/api/copy.json' do
   else
     begin
       page_from = Page.where(:name => from).first
-      unless Page.where(:name => to).count > 0
+      if Page.where(:name => to).count < 1
         page_to = Page.new(page_from.to_hash)
         page_to.name = to
         page_to.save
@@ -23,6 +23,28 @@ post '/api/copy.json' do
     rescue => e
       STDERR.puts e
       @mes = {:error => true, :message => 'copy error'}.to_json
+    end
+  end
+end
+
+post '/api/rename.json' do
+  from = params['from']
+  to = params['to']
+  if from.to_s.size < 1 or to.to_s.size < 1
+    @mes = {:error => true, :message => 'from and to required'}.to_json
+  else
+    begin
+      if Page.where(:name => to).count < 1
+        page = Page.where(:name => from).first
+        page.name = to
+        page.save
+        @mes = {:message => to}.to_json
+      else
+        @mes = {:error => true, :message => 'page already exists'}.to_json
+      end
+    rescue => e
+      STDERR.puts e
+      @mes = {:error => true, :message => 'rename error'}.to_json
     end
   end
 end
