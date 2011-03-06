@@ -52,25 +52,23 @@ end
 
 get '/api/search.json' do
   word = params['word']
-  if !word or word.size < 1
-    @mes = {:error => true, :message => 'word required'}.to_json
+  if word.to_s.size < 1
+    @pages = Page.all.desc(:time)
   else
     @pages = Page.where(:lines => /#{word}/).desc(:time)
-    @mes = @pages.map{|i|
-      h = {
-        :name => i.name,
-        :lines => i.lines.size,
-        :time => i.time
-      }
-      for line in i.lines do
-        if line =~ /\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/
-          h[:img] = line.scan(/\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/).first.join('')
-          break
-        end
-      end
-      h
-    }.to_json
   end
+  @mes = @pages.map{|i|
+    h = {
+      :name => i.name,
+      :time => i.time
+    }
+    if i.lines != nil and i.lines.class == Array
+      h[:lines] = i.lines.size
+    else
+      h = nil
+    end
+    h
+  }.delete_if{|i| i == nil}.to_json
 end
 
 get '/api/related_pages.json' do
