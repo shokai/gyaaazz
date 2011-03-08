@@ -102,7 +102,7 @@ function save_page(){
 function markup(line){
     line = line.htmlEscape();
     line = line.replace_all(/\[\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+) (https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]\]/, '<a href="$1"><img src="$2$3" width="100" height="100" /></a>', ']]]');
-    line = line.replace_all(/\[\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]\]/, '<img src="$1$2" width="100" height="100" />', ']]]');
+    line = line.replace_all(/\[\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]\]/, '<a href="$1"><img src="$1$2" width="100" height="100" /></a>', ']]]');
     line = line.replace_all(/\[\[\[(.+)\]\]\]/, '<b>$1</b>', ']]]');
     line = line.replace_all(/\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/, '<img src="$1$2" />', ']]');
     line = line.replace_all(/\[\[(https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+) (https?\:[\w\.\~\-\/\?\&\+\=\:\@\%\;\#\%]+)(.jpe?g|.gif|.png)\]\]/, '<a href="$1"><img src="$2$3" /></a>', ']]');
