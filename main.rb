@@ -146,22 +146,33 @@ post '/*.json' do
   filter_api
   name = params[:splat].first
   lines = params[:lines].delete_if{|i| i.size < 1 or i =~ /^\s+$/}
-  now = Time.now
-  page = Page.where(:name => name).desc(:time).first
-  if page and page.lines == lines
-    @mes = {:success => true, :message => 'save'}.to_json
-  else
+  p lines
+  if lines.size == 1 and lines.first == '(empty)'
     begin
-      page = Page.new unless page
-      page.name = name
-      page.lines = lines
-      page.time = now
-      page.save
-      PageLog.new(:name => name, :lines => lines, :time => now).save
-      @mes = {:success => true, :message => 'saved!'}.to_json
+      Page.where(:name => name).delete_all
+      @mes = {:success => true, :message => 'delete!'}.to_json
     rescue => e
       STDERR.puts e
-      @mes = {:error => true, :message => 'save error!'}.to_json
+      @mes = {:error => true, :message => 'delete error'}.to_json
+    end
+  else
+    now = Time.now
+    page = Page.where(:name => name).desc(:time).first
+    if page and page.lines == lines
+      @mes = {:success => true, :message => 'save'}.to_json
+    else
+      begin
+        page = Page.new unless page
+        page.name = name
+        page.lines = lines
+        page.time = now
+        page.save
+        PageLog.new(:name => name, :lines => lines, :time => now).save
+        @mes = {:success => true, :message => 'saved!'}.to_json
+      rescue => e
+        STDERR.puts e
+        @mes = {:error => true, :message => 'save error!'}.to_json
+      end
     end
   end
 end
