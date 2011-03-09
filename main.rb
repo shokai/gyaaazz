@@ -76,15 +76,15 @@ get '/api/related_pages.json' do
   if !name or name.size < 1
     @mes = {:error => true, :message => 'page required'}.to_json
   else
-    @pages = Array.new
+    tmp = Hash.new
     begin
       Page.where(:lines => /\[\[#{name}\]\]/).each{|page|
-        @pages << page
+        tmp[page.name] = page unless tmp[page.name]
         Page.where(:lines => /\[\[#{page.name}\]\]/).each{|i|
-          @pages << i
+          tmp[i.name] = i unless tmp[i.name]
         }
       }
-      @pages = @pages.uniq.delete_if{|i|
+      pages = tmp.values.uniq.delete_if{|i|
         i.name == name
       }.sort{|a,b|
         b.time <=> a.time
@@ -102,7 +102,7 @@ get '/api/related_pages.json' do
         end
         h
       }
-      @mes = @pages.to_json
+      @mes = pages.to_json
     rescue => e
       STDERR.puts e
       @mes = {:error => true, :message => 'error'}.to_json
