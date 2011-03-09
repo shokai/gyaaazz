@@ -132,7 +132,6 @@ get '/*.json' do
       page = Page.new
       page.time = Time.now
       page.name = name
-      page.save
     end
     @mes = page.to_hash.to_json
   rescue => e
@@ -146,7 +145,6 @@ post '/*.json' do
   filter_api
   name = params[:splat].first
   lines = params[:lines].delete_if{|i| i.size < 1 or i =~ /^\s+$/}
-  p lines
   if lines.size == 1 and lines.first == '(empty)'
     begin
       Page.where(:name => name).delete_all
