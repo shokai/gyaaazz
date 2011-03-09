@@ -67,7 +67,7 @@ for i in 0...pages.size do
     STDERR.puts e
     errors << page
   ensure
-    sleep 1
+    sleep 5
   end
 end
 
