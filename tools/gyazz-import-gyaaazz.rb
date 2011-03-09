@@ -55,11 +55,15 @@ for i in 0...pages.size do
     puts "===#{page} (#{i}/#{pages.size})==="
     puts lines = get_page(name, page)
     next if lines.size < 1
-    Page.new(
-             :name => page.gsub(/\+/,' '),
-             :time => Time.now.to_i,
-             :lines => lines
-             ).save
+    pagename = page.gsub(/\+/,' ')
+    next if pagename =~ /\/$/
+    if Page.where(:name => pagename).count < 1
+      Page.new(
+               :name => pagename,
+               :time => Time.now.to_i,
+               :lines => lines
+               ).save
+    end
   rescue => e
     STDERR.puts e
     errors << page
