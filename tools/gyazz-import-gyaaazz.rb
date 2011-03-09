@@ -32,7 +32,7 @@ Mongoid.configure{|conf|
 }
 
 def get_pagelist(name)
-  doc = Nokogiri::HTML open(URI.encode "http://gyazz.com/#{name}/")
+  doc = Nokogiri::HTML open("http://gyazz.com/#{URI.encode(name)}/")
   urls = doc.xpath('//a').map{|a| a}.delete_if{|a|
     !(a['href'] =~ /http:\/\/gyazz.com\/#{name}\/(.+)/)
   }.map{|a|
@@ -41,21 +41,21 @@ def get_pagelist(name)
 end
 
 def get_page(name, page_name)
-  data = open(URI.encode "http://gyazz.com/#{name}/#{page_name}/text").read.toutf8
+  data = open("http://gyazz.com/#{URI.encode(name)}/#{URI.encode(page_name)}/text").read.toutf8
   lines = data.split(/[\r\n]/)
   lines
 end
 
-errors = Array.new
 pages = get_pagelist(name)
 
+errors = Array.new
 for i in 0...pages.size do
   page = pages[i]
   begin
     puts "===#{page} (#{i}/#{pages.size})==="
     pagename = page.gsub(/\+/,' ')
     next if pagename =~ /\/$/
-    next if Page.where(:name => pagename).count < 1
+    next if Page.where(:name => pagename).count > 0
     puts lines = get_page(name, page)
     if lines.size < 1
       errors << page
