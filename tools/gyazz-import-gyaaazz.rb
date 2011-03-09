@@ -57,7 +57,10 @@ for i in 0...pages.size do
     next if pagename =~ /\/$/
     next if Page.where(:name => pagename).count < 1
     puts lines = get_page(name, page)
-    next if lines.size < 1
+    if lines.size < 1
+      errors << page
+      next
+    end
     Page.new(
              :name => pagename,
              :time => Time.now.to_i,
