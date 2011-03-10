@@ -117,10 +117,11 @@ div#edit{
 
 div#related_pages{
     padding-left : 20px;
-    margin-bottom : 110px;
+    margin-bottom : 30px;
+    overflow : auto;
 }
 
-div#related_pages span{
+div#related_pages div{
     width : 80px;
     height : 80px;
     font-size : 16pt;
@@ -128,6 +129,7 @@ div#related_pages span{
     text-align : center;
     background-color : #CCC;
     margin : 3px;
+    overflow: ellipsis;
 }
 
 div#related_pages a{
@@ -135,8 +137,8 @@ div#related_pages a{
 }
 
 div#related_pages img{
-    width : 80px;
-    height : 80px;
+    max-width : 100%;
+    max-height : 100%;
 }
 
 div#float_clear{

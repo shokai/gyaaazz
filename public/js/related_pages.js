@@ -4,7 +4,7 @@ $(function(){
         }
         else{
             res.forEach(function(i){
-                var box = $('<span>');
+                var box = $('<div>');
                 var a = $('<a>').attr('href',app_root+'/'+i.name);
                 if(i.img){
                     a.append($('<img>').attr('src',i.img));
