@@ -66,10 +66,10 @@ for i in 0...pages.size do
              :time => Time.now.to_i,
              :lines => lines
              ).save
+    sleep 5
   rescue => e
     STDERR.puts e
     errors << page
-  ensure
     sleep 5
   end
 end
