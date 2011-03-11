@@ -144,3 +144,8 @@ div#related_pages img{
 div#float_clear{
     clear : both;
 }
+
+img.thumb {
+    max-width : 200px;
+    max-height : 200px;
+}
