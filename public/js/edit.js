@@ -4,14 +4,12 @@ var timer_save, timer_sync;
 
 var KC = {tab:9, enter:13, left:37, up:38, right:39, down:40, n:78, p:80};
 var last_edit_at = new Date();
-var last_input_clicked_at = null;
 
 $(function(){
     load_page();
     sync_start();
     $('body').click(function(e){
 	    if(currentline == null) return;
-	    if(last_input_clicked_at && new Date()-last_input_clicked_at < 100) return;
 	    save_currentline();
 	    currentline = null;
 	    sync_start();
@@ -172,9 +170,6 @@ function editline(num){
     $('#line'+num).val(data.lines[num]);
     $('input#line'+num).focus();
     line.die('click');
-    $('input#line'+num).click(function(e){
-	    last_input_clicked_at = new Date();
-	});
     var indent = data.lines[currentline].indent();
     $('input#line'+num).caret({start:indent, end:indent});
     $('input#line'+num).keypress(function(e){
