@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'rack'
-require 'sinatra/reloader'
+require 'sinatra/reloader' if development?
 require 'bson'
+gem 'mongoid','>=2.0.0'
 require 'mongoid'
-gem 'mongoid','>=2.0.0.rc.7'
 require 'yaml'
 require 'json'
 require File.dirname(__FILE__)+'/models/page'
