@@ -16,7 +16,7 @@ post '/api/copy.json' do
         page_to = Page.new(page_from.to_hash)
         page_to.name = to
         page_to.save
-        @mes = {:from => from, :to => to, :method => 'copy'}.to_json
+        @mes = {:success => true, :from => from, :to => to, :method => 'copy'}.to_json
       else
         @mes = {:error => true, :message => 'page already exists'}.to_json
       end
@@ -38,7 +38,7 @@ post '/api/rename.json' do
         page = Page.where(:name => from).first
         page.name = to
         page.save
-        @mes = {:from => from, :to => to, :method => 'rename'}.to_json
+        @mes = {:succes => true, :from => from, :to => to, :method => 'rename'}.to_json
       else
         @mes = {:error => true, :message => 'page already exists'}.to_json
       end
@@ -46,6 +46,17 @@ post '/api/rename.json' do
       STDERR.puts e
       @mes = {:error => true, :message => 'rename error'}.to_json
     end
+  end
+end
+
+post '/api/delete.json' do
+  name = params['name']
+  begin
+    Page.where(:name => name).delete_all
+    @mes = {:success => true, :message => 'page deleted!', :name => name}.to_json
+  rescue => e
+    STDERR.puts e
+    @mes = {:error => true, :message => 'page delete error'}.to_json
   end
 end
 

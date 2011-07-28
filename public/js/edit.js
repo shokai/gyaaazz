@@ -42,6 +42,20 @@ $(function(){
                },
                'json');
     });
+
+    $('.menu #delete').click(function(){
+        if(!confirm('delete this page?')) return;
+        $.post(app_root+'/api/delete.json',
+               {name : page_name},
+               function(res){
+                   if(res.error) alert(res.message);
+                   else{
+                       alert(res.message);
+                       location.href = app_root;
+                   }
+               },
+               'json');
+    });
 });
 
 document.addEventListener('keydown', function(e){
