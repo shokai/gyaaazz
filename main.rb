@@ -190,6 +190,9 @@ get '/*/edit' do
   filter_api
   @name = params[:splat].first
   @page = Page.where(:name => @name).desc(:time).first
+  unless @page
+    @page = Page.new(:time => Time.now, :name => @name, :lines => [])
+  end
   haml :page_edit
 end
 
