@@ -16,18 +16,23 @@
     %link{:rel => 'stylesheet', :href => "#{app_root}/css/edit.css", :type => 'text/css'}
   %body
     %div.container
-      %div.head
+      %div#header
         %h1 
           %a{:href => app_root}
             #{@title}
           \/ #{@name}
-      %div.main
+        %div#menu
+          %span.button [page menu]
+          %span#copy copy
+          %span#rename rename
+          %span#delete delete
+      %div#main
         %div#edit
       %div#related_pages
       %div#float_clear
       %div.push
       %div#status
-    %div.footer
+    %div#footer
       %a{:href => 'http://github.com/shokai/gyaaazz'}
         github.com/shokai/gyaaazz
 

@@ -175,10 +175,6 @@ post '/*.json' do
   end
 end
 
-get '/*/' do
-  
-end
-
 get '/*' do
   filter_api
   @name = params[:splat].first

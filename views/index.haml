@@ -7,9 +7,9 @@
     %link{:rel => 'stylesheet', :href => "#{app_root}/css/edit.css", :type => 'text/css'}
   %body
     %div.container
-      %div.head
+      %div#header
         %h1= @title
-      %div.main
+      %div#main
         %div#edit
           %ul
             - for name in @pages
