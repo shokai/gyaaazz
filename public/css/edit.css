@@ -17,6 +17,11 @@ a:hover {
     color : #39B5D2;
 }
 
+.button {
+    background : #DDD;
+    color : #000;
+}
+
 #header {
     height : 40px;
     padding : 10px 15px;
@@ -29,8 +34,8 @@ a:hover {
     font-size : 230%;
 }
 
-#header #menu{
-    float : right;
+#header .menu{
+    text-align : right;
 }
 
 .container {
@@ -152,7 +157,3 @@ img.thumb {
     max-height : 200px;
 }
 
-.button {
-    background : #CCC;
-    color : #000;
-}

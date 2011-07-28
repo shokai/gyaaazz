@@ -15,6 +15,18 @@ $(function(){
 	    sync_start();
 	    display();
     });
+
+    $('.menu #copy').click(function(){
+        var to = prompt("copy page to", "");
+        if(!to || to.length < 1) return;
+        $.post(app_root+'/api/copy.json',
+               {from : page_name, to : to},
+               function(res){
+                   if(res.error) alert(res.message);
+                   else alert('success! => page:'+res.to);
+               },
+               'json');
+    });
 });
 
 document.addEventListener('keydown', function(e){

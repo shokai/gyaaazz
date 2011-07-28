@@ -16,7 +16,7 @@ post '/api/copy.json' do
         page_to = Page.new(page_from.to_hash)
         page_to.name = to
         page_to.save
-        @mes = {:message => to}.to_json
+        @mes = {:error => false, :from => from, :to => to, :method => 'copy'}.to_json
       else
         @mes = {:error => true, :message => 'page already exists'}.to_json
       end
