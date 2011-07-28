@@ -156,7 +156,7 @@ post '/*.json' do
   filter_api
   name = params[:splat].first
   lines = params[:lines].delete_if{|i| i.size < 1 or i =~ /^\s+$/}
-  if lines.size == 1 and lines.first == '(empty)'
+  if lines.size == 0 or (lines.size == 1 and lines.first == '(empty)')
     begin
       Page.where(:name => name).delete_all
       @mes = {:success => true, :message => 'delete!'}.to_json
@@ -186,8 +186,16 @@ post '/*.json' do
   end
 end
 
+get '/*/edit' do
+  filter_api
+  @name = params[:splat].first
+  @page = Page.where(:name => @name).desc(:time).first
+  haml :page_edit
+end
+
 get '/*' do
   filter_api
   @name = params[:splat].first
   haml :page
 end
+

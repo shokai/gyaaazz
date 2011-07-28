@@ -1,0 +1,27 @@
+!!! XHTML
+%html
+  %head
+    %title #{@title}/#{@name}
+    %script{:type => 'text/javascript', :src => "#{app_root}/js/jquery.js"}
+    %script{:type => 'text/javascript', :src => "#{app_root}/js/util.js"}
+    %script{:type => 'text/javascript', :src => "#{app_root}/js/page_edit.js"}
+    :javascript
+      var app_root = "#{app_root}"
+      var page_name = "#{@name}"
+    %link{:rel => 'stylesheet', :href => "#{app_root}/css/fonts-3.1.1.css", :type => 'text/css'}
+    %link{:rel => 'stylesheet', :href => "#{app_root}/css/reset-3.1.1.css", :type => 'text/css'}
+    %link{:rel => 'stylesheet', :href => "#{app_root}/css/edit.css", :type => 'text/css'}
+  %body
+    %div.container
+      %div#header
+        %h1 
+          %a{:href => app_root}
+            #{@title}
+          \/ #{@name}
+      %div#main
+        %input{:id => 'save', :type => 'button', :value => 'save'}
+        %textarea{:id => 'edit'}= @page.lines.join("\n")
+  %div#footer
+    %a{:href => 'http://github.com/shokai/gyaaazz'}
+      github.com/shokai/gyaaazz
+
