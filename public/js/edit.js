@@ -16,6 +16,12 @@ $(function(){
 	    display();
     });
 
+    $('.button').hover(function(){
+        $(this).css('cursor','pointer');
+    },function(){
+        $(this).css('cursor','default');
+    });
+
     $('.menu #copy').click(function(){
         var to = prompt("copy page to", "");
         if(!to || to.length < 1) return;
