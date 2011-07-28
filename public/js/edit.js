@@ -27,6 +27,21 @@ $(function(){
                },
                'json');
     });
+
+    $('.menu #rename').click(function(){
+        var to = prompt("rename page to", page_name);
+        if(!to || to.length < 1) return;
+        $.post(app_root+'/api/rename.json', 
+               {from : page_name, to : to},
+               function(res){
+                   if(res.error) alert(res.message);
+                   else{
+                       alert('success! => page:'+res.to);
+                       location.href = app_root+'/'+res.to;
+                   }
+               },
+               'json');
+    });
 });
 
 document.addEventListener('keydown', function(e){
