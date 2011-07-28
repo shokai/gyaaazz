@@ -88,7 +88,7 @@ ul {
 }
 
 ul li input {
-  width : 100%;
+    width : 99%;
 }
 
 ul li:before {
