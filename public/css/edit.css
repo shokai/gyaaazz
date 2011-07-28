@@ -22,6 +22,11 @@ a:hover {
     color : #000;
 }
 
+a.button{
+    color : #000;
+    background : #DDD;
+}
+
 #header {
     height : 40px;
     padding : 10px 15px;
