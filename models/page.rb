@@ -1,4 +1,3 @@
-
 class Page
   include Mongoid::Document
   field :name

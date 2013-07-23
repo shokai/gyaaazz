@@ -1,0 +1,13 @@
+development:
+  sessions:
+    default:
+      database: gyaaazz-dev
+      hosts:
+        - localhost:27017
+production:
+  sessions:
+    default:
+      database: gyaaazz
+      hosts:
+        - localhost:27017
+

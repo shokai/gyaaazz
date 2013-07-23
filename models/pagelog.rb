@@ -1,4 +1,3 @@
-
 class PageLog
   include Mongoid::Document
   field :name
