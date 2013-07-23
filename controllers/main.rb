@@ -1,5 +1,6 @@
-before do
+before '/*' do
   @title = 'gyaaazz'
+  protect!
 end
 
 post '/api/copy.json' do

@@ -24,6 +24,16 @@ Run
 
     % bundle exec rackup config.ru -p 5000
 
+=> http://localhost:5000
+
+
+### Auth
+
+    % export BASIC_AUTH_USERNAME=user
+    % export BASIC_AUTH_PASSWORD=pass
+    % export RACK_ENV=production
+    % bundle exec rackup config.ru -p 5000
+
 
 Install as a Service
 --------------------
