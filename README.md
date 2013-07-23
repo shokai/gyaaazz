@@ -19,6 +19,12 @@ Install Dependencies
     % bundle install
 
 
+Config
+------
+
+    % sample.mongoid.yml mongoid.yml
+
+
 Run
 ---
 
