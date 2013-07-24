@@ -20,7 +20,7 @@ post '/api/copy.json' do
         @mes = {:error => true, :message => 'page already exists'}.to_json
       end
     rescue => e
-      STDERR.puts e
+      $logger.warn e
       @mes = {:error => true, :message => 'copy error'}.to_json
     end
   end
@@ -42,7 +42,7 @@ post '/api/rename.json' do
         @mes = {:error => true, :message => 'page already exists'}.to_json
       end
     rescue => e
-      STDERR.puts e
+      $logger.warn e
       @mes = {:error => true, :message => 'rename error'}.to_json
     end
   end
@@ -54,7 +54,7 @@ post '/api/delete.json' do
     Page.where(:name => name).delete_all
     @mes = {:success => true, :message => 'page deleted!', :name => name}.to_json
   rescue => e
-    STDERR.puts e
+    $logger.warn e
     @mes = {:error => true, :message => 'page delete error'}.to_json
   end
 end
@@ -114,7 +114,7 @@ get '/api/related_pages.json' do
       }
       @mes = pages.to_json
     rescue => e
-      STDERR.puts e
+      $logger.warn e
       @mes = {:error => true, :message => 'error'}.to_json
     end
   end
@@ -145,7 +145,7 @@ get '/*.json' do
     end
     @mes = page.to_hash.to_json
   rescue => e
-    STDERR.puts e
+    $logger.warn e
     status 404
     @mes = {:error => true, :message => 'page not found'}.to_json
   end
@@ -160,7 +160,7 @@ post '/*.json' do
       Page.where(:name => name).delete_all
       @mes = {:success => true, :message => 'delete!'}.to_json
     rescue => e
-      STDERR.puts e
+      $logger.warn e
       @mes = {:error => true, :message => 'delete error'}.to_json
     end
   else
@@ -178,7 +178,7 @@ post '/*.json' do
         PageLog.new(:name => name, :lines => lines, :time => now).save
         @mes = {:success => true, :message => 'saved!'}.to_json
       rescue => e
-        STDERR.puts e
+        $logger.warn e
         @mes = {:error => true, :message => 'save error!'}.to_json
       end
     end
