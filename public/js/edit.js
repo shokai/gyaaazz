@@ -141,7 +141,7 @@ function save_page(){
 		    if(res.error) message(res.message);
 		    else if(res.success && tmp == data) message(res.message);
 		},'json');
-	}, 3000);
+	}, 100);
 };
 
 function markup(line){
